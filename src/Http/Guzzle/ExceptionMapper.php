@@ -72,7 +72,7 @@ class ExceptionMapper
 
     private function create($class, $exception, MethodInterface $method)
     {
-        $response = json_decode($exception->getResponse(), true);
+        $response = json_decode($exception->getResponse()->getBody(), true);
 
         // map declined response to result object
         if ($exception->getCode() == 402) {
