@@ -61,7 +61,8 @@ class Client
         
         $oauth = new Oauth1([
             'consumer_key' => $options['consumerKey'],
-            'consumer_secret' => $options['consumerSecret']
+            'consumer_secret' => $options['consumerSecret'],
+            'token_secret'    => ''
         ]);
         
         $stack->push($oauth);
