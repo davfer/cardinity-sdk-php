@@ -47,9 +47,8 @@ class ClientAdapter implements ClientInterface
         array $options = []
     ) {
         try {
-            $response = $this->client->send(
-                $this->client->createRequest($requestMethod, $url, $options)
-            );
+            $request  = $this->client->request($requestMethod, $url, $options);
+            $response = $this->client->send($request);
             return $response->json();
         } catch (ClientException $e) {
             throw $this->mapper->get($e, $method);
