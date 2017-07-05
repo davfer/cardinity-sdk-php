@@ -56,21 +56,20 @@ class Client
      */
     public static function create(array $options = [], $logger = Client::LOG_NONE)
     {
-        $client = new \GuzzleHttp\Client([
-            'base_url' => self::$url,
-            'defaults' => ['auth' => 'oauth']
-        ]);
-
-        if ($logger !== false) {
-            $subscriber = new LogSubscriber($logger, Formatter::DEBUG);
-            $client->getEmitter()->attach($subscriber);
-        }
-
+        $stack = HandlerStack::create();
+        
         $oauth = new Oauth1([
             'consumer_key' => $options['consumerKey'],
             'consumer_secret' => $options['consumerSecret']
         ]);
-        $client->getEmitter()->attach($oauth);
+        
+        $stack->push($oauth);
+        
+        $client = new \GuzzleHttp\Client([
+            'base_uri' => self::$url,
+            'defaults' => ['auth' => 'oauth'],
+            'handler' => $stack
+        ]);
 
         $mapper = new ResultObjectMapper();
 
