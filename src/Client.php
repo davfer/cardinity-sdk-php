@@ -13,6 +13,7 @@ use Cardinity\Method\ValidatorInterface;
 use GuzzleHttp\Subscriber\Log\Formatter;
 use GuzzleHttp\Subscriber\Log\LogSubscriber;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
+use GuzzleHttp\HandlerStack;
 use Symfony\Component\Validator\Validation;
 
 class Client
@@ -67,7 +68,7 @@ class Client
         
         $client = new \GuzzleHttp\Client([
             'base_uri' => self::$url,
-            'defaults' => ['auth' => 'oauth'],
+            'auth' => 'oauth',
             'handler' => $stack
         ]);
 
