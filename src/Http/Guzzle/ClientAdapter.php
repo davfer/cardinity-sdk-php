@@ -49,7 +49,8 @@ class ClientAdapter implements ClientInterface
         try {
             $request  = $this->client->request($requestMethod, $url, $options);
             $response = $this->client->send($request);
-            return $response->json();
+            
+            return json_decode($response->getBody(), true);
         } catch (ClientException $e) {
             throw $this->mapper->get($e, $method);
         } catch (\Exception $e) {
